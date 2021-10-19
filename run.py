@@ -14,7 +14,7 @@ class Runnable(QRunnable):
 
     def run(self):
         self.initialiseUDPCon()
-        for i in range(1000):
+        while True:
             self.pktformat='cifff??????fffiiiifffffiffffffffffffffffff'
             self.messageback, self.ipAddress =self.clientSocket.recvfrom(16384)
             self.backString = unpack(self.pktformat, self.messageback[:152])
