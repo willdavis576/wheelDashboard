@@ -2,8 +2,9 @@ import sys, time
 from socket import *
 from struct import *
 from PyQt5.QtCore import QRunnable, Qt, QThreadPool
-from PyQt5.QtWidgets import (QApplication,QLabel,QMainWindow,QPushButton,QVBoxLayout,QWidget)
-
+# from PyQt5.QtWidgets import (QApplication,QLabel,QMainWindow,QPushButton,QVBoxLayout,QWidget)
+from PyQt5.QtWidgets import * 
+from PyQt5.QtGui import * 
 
 
 
@@ -67,10 +68,13 @@ class Window(QMainWindow):
     def setupUi(self):
         self.setWindowTitle("Wheel Dash")
         self.setGeometry(0, 0, 720, 720)
+        self.setStyleSheet("background:rgb(51,51,51)")
         self.centralWidget = QWidget()
         self.setCentralWidget(self.centralWidget)
 
         self.gearLabel = QLabel("N")
+        self.gearLabel.setFont(QFont('Comic Sans MS', 200))
+        self.gearLabel.setStyleSheet("color:rgb(255,255,255)")
         self.gearLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         # self.speedLabel = QLabel("N")
         # self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
