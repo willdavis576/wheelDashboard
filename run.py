@@ -6,7 +6,8 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setGeometry(300, 300, 720, 720)
+        # self.setGeometry(300, 300, 720, 720)
+        self.showMaximized()
         self.setWindowTitle("PyQt5 window")
         self.show()
 

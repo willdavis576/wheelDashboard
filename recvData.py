@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from socket import *
 from struct import *
 from IPython import embed
@@ -41,10 +39,7 @@ while 1:
 
     gear = backString[23]
     speed = backString[3]
-    #
-
-
-
+    
 
     i+=1
 
