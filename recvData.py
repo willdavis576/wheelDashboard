@@ -1,6 +1,5 @@
 from socket import *
 from struct import *
-from IPython import embed
 
 serverName='192.168.0.163'
 serverPort = 9996
@@ -28,10 +27,9 @@ print(carName, driverName, trackName)
 message=pack('iii',1,1,1)
 clientSocket.sendto(message, (serverName, serverPort))
 
-i=0
 
 
-while 1:
+while True:
     pktformat='cifff??????fffiiiifffffiffffffffffffffffff'
     messageback, ipAddress =clientSocket.recvfrom(16384)
     backString = unpack(pktformat, messageback[:152])
@@ -39,9 +37,6 @@ while 1:
 
     gear = backString[23]
     speed = backString[3]
-    
-
-    i+=1
 
 
 
