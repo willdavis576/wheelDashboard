@@ -17,13 +17,21 @@ class Runnable(QRunnable):
             self.pktformat='cifff??????fffiiiifffffiffffffffffffffffff'
             self.messageback, self.ipAddress =self.clientSocket.recvfrom(16384)
             self.backString = unpack(self.pktformat, self.messageback[:152])
-            #print(self.backString[:7])
 
             self.gear = self.backString[23]
             self.speed = self.backString[3]
 
-            window.gearLabel.setText(str(self.gear))
-            window.speedLabel.setText("hello World")
+            if (self.gear > 1):
+                self.gearFinal = self.gear - 1
+
+            if (self.gear == 1):
+                self.gearFinal = "N"
+
+            if (self.gear == 0):
+                self.gearFinal = "R"
+
+            window.gearLabel.setText(str(self.gearFinal))
+            # window.speedLabel.setText("hello World")
 
             
     def initialiseUDPCon(self):
@@ -64,12 +72,12 @@ class Window(QMainWindow):
 
         self.gearLabel = QLabel("N")
         self.gearLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.speedLabel = QLabel("N")
-        self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        # self.speedLabel = QLabel("N")
+        # self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
         
         layout = QVBoxLayout()
         layout.addWidget(self.gearLabel)
-        layout.addWidget(self.speedLabel)
+        # layout.addWidget(self.speedLabel)
         self.centralWidget.setLayout(layout)
 
     def runTasks(self):
