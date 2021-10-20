@@ -1,0 +1,1 @@
+pyuic5 "C:\Users\Will\OneDrive - Middlesex University\Inventions\fanatec wheel\wheel rev 3\wheelDashboard\designer\mainWindow.ui" -o "C:\Users\Will\OneDrive - Middlesex University\Inventions\fanatec wheel\wheel rev 3\wheelDashboard\designer\test.py" -x

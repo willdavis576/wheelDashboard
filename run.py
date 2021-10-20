@@ -6,6 +6,13 @@ from PyQt5.QtCore import QRunnable, Qt, QThreadPool
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
 
+stylesheet = """
+    window {
+        background-image: url("C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png)"); 
+        background-repeat: no-repeat; 
+        background-position: center;
+    }
+"""
 
 class Runnable(QRunnable):
     def __init__(self):
@@ -60,14 +67,14 @@ class Runnable(QRunnable):
         self.message=pack('iii',1,1,1)
         self.clientSocket.sendto(self.message, (self.serverName, self.serverPort))
 
-class Window(QDialog):
+class Window(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi()
         #self.runTasks()
 
     def fonts(self):
-        self.fontName = 'Comic Sans MS'
+        self.fontName = 'Arial'
 
         self.gearLabel = QLabel("N")
         self.gearLabel.setFont(QFont(self.fontName, 200))
@@ -89,27 +96,24 @@ class Window(QDialog):
         self.setWindowTitle("Wheel Dash")
         self.setGeometry(0, 0, 720, 720)
         self.setFixedSize(720,720)
-        self.setStyleSheet("background:rgb(200,200,205)")
-        
+        # self.setStyleSheet("background:rgb(200,200,205)")
+        self.setStyleSheet("background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png); background-repeat: no-repeat; background-position: center;")
+        # self.setStyleSheet(stylesheet)
         self.fonts()
         self.createGridLayout()
-
-               
-        windowLayout = QVBoxLayout()
-        self.setLayout(windowLayout)
      
 
     def createGridLayout(self):
         layout = QGridLayout()
-        layout.setColumnStretch(1, 4)
-        layout.setColumnStretch(2, 4)
+ 
+        layout.addWidget(self.gearLabel, 0,1)
+        layout.addWidget(self.speedLabelLabel,1,0)
+        layout.addWidget(self.speedLabel,2,0)
 
-        layout.addWidget(self.gearLabel, 0,0)
-        layout.addWidget(self.speedLabelLabel ,1,1)
-        layout.addWidget(self.speedLabel,2,1)
-             
-    
         self.setLayout(layout)
+
+       
+
 
     def runTasks(self):
         threadCount = QThreadPool.globalInstance().maxThreadCount()
