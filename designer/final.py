@@ -77,7 +77,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MainWindow.resize(720, 720)
+        MainWindow.setGeometry(0,0,720,720)
         MainWindow.setMinimumSize(QtCore.QSize(720, 720))
         MainWindow.setMaximumSize(QtCore.QSize(720, 720))
         MainWindow.setCursor(QtGui.QCursor(QtCore.Qt.SizeVerCursor))
