@@ -6,8 +6,10 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import * 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+from IPython import embed
+
 #0 is windows, 1 is pi
-device = 1
+device = 0
 backgroundLocation = ""
 winBackLoc = "background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png); background-repeat: no-repeat; background-position: center;\)"
 piBackLoc = "background-image: url(/home/pi/wheelDashboard/dashBackground.png)"
@@ -32,6 +34,10 @@ class Runnable(QRunnable):
 
             self.gear = self.backString[23]
             self.speed = self.backString[3]
+            self.engineRPM = round(self.backString[21])
+
+            self.engineRPMScaled = round((self.engineRPM) * (595 / 8000))
+            ui.revCounter.setFixedWidth(self.engineRPMScaled)
 
             if (self.gear > 1):
                 self.gearFinal = self.gear - 1
@@ -46,7 +52,8 @@ class Runnable(QRunnable):
 
             ui.gearLabel.setText(str(self.gearFinal))
             ui.speedLabel.setText(str(self.speedFinal))
-            
+
+           
             
     def initialiseUDPCon(self):
         self.serverName='192.168.0.163'
@@ -199,7 +206,7 @@ class Ui_MainWindow(object):
         self.PFuelLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.PFuelLabel.setObjectName("PFuelLabel")
         self.revCounter = QtWidgets.QFrame(self.centralwidget)
-        self.revCounter.setGeometry(QtCore.QRect(110, 26, 100, 71))
+        self.revCounter.setGeometry(QtCore.QRect(110, 26, 0, 71))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -210,6 +217,7 @@ class Ui_MainWindow(object):
         self.revCounter.setLineWidth(57)
         self.revCounter.setFrameShape(QtWidgets.QFrame.HLine)
         self.revCounter.setObjectName("revCounter")
+
 
     def runTasks(self):
             threadCount = QThreadPool.globalInstance().maxThreadCount()
