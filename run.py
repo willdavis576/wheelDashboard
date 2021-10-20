@@ -5,8 +5,6 @@ from PyQt5.QtCore import QRunnable, Qt, QThreadPool
 # from PyQt5.QtWidgets import (QApplication,QLabel,QMainWindow,QPushButton,QVBoxLayout,QWidget)
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
-from PyQt5 import Qt as qt
-
 
 
 class Runnable(QRunnable):
@@ -62,47 +60,56 @@ class Runnable(QRunnable):
         self.message=pack('iii',1,1,1)
         self.clientSocket.sendto(self.message, (self.serverName, self.serverPort))
 
-class Window(QMainWindow):
+class Window(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi()
-        self.runTasks()
+        #self.runTasks()
 
     def fonts(self):
-        self.gearLabel = QLabel("")
+        self.fontName = 'Comic Sans MS'
+
+        self.gearLabel = QLabel("N")
         self.gearLabel.setFont(QFont(self.fontName, 200))
         self.gearLabel.setStyleSheet("color:rgb(255,255,255)")
-        self.gearLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        # self.gearLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
 
         self.speedLabelLabel = QLabel("SPEED")
         self.speedLabelLabel.setFont(QFont(self.fontName, 75))
         self.speedLabelLabel.setStyleSheet("color:rgb(255,255,255)")
-        self.speedLabelLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        # self.speedLabelLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
 
-        self.speedLabel = QLabel("")
+        self.speedLabel = QLabel("0")
         self.speedLabel.setFont(QFont(self.fontName, 200))
         self.speedLabel.setStyleSheet("color:rgb(255,255,255)")
-        self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        # self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
 
 
     def setupUi(self):
-        self.fontName = 'Comic Sans MS'
         self.setWindowTitle("Wheel Dash")
         self.setGeometry(0, 0, 720, 720)
         self.setFixedSize(720,720)
         self.setStyleSheet("background:rgb(200,200,205)")
-        self.centralWidget = QWidget()
-        self.setCentralWidget(self.centralWidget)
         
         self.fonts()
-        
-        layout = QVBoxLayout()
-        layout.addWidget(self.gearLabel)
-        layout.addWidget(self.speedLabelLabel)
-        layout.addWidget(self.speedLabel)
-        self.centralWidget.setLayout(layout)
+        self.createGridLayout()
 
+               
+        windowLayout = QVBoxLayout()
+        self.setLayout(windowLayout)
+     
+
+    def createGridLayout(self):
+        layout = QGridLayout()
+        layout.setColumnStretch(1, 4)
+        layout.setColumnStretch(2, 4)
+
+        layout.addWidget(self.gearLabel, 0,0)
+        layout.addWidget(self.speedLabelLabel ,1,1)
+        layout.addWidget(self.speedLabel,2,1)
+             
     
+        self.setLayout(layout)
 
     def runTasks(self):
         threadCount = QThreadPool.globalInstance().maxThreadCount()
