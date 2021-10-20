@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 device = 1
 backgroundLocation = ""
 winBackLoc = "background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png); background-repeat: no-repeat; background-position: center;\)"
-piBackLoc = "background-image: url(/home/pi/wheelDashboard)"
+piBackLoc = "background-image: url(/home/pi/wheelDashboard/dashBackground.png)"
 
 if device == 0:
     backgroundLocation = winBackLoc
