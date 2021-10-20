@@ -6,6 +6,19 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import * 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+#0 is windows, 1 is pi
+device = 1
+backgroundLocation = ""
+winBackLoc = "background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png); background-repeat: no-repeat; background-position: center;\)"
+piBackLoc = "background-image: url(/home/pi/wheelDashboard)"
+
+if device == 0:
+    backgroundLocation = winBackLoc
+if device == 1:
+    backgroundLocation = piBackLoc
+
+print(backgroundLocation)
+
 class Runnable(QRunnable):
     def __init__(self):
         super().__init__()
@@ -75,7 +88,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.graphicsView = QtWidgets.QGraphicsView(self.centralwidget)
         self.graphicsView.setGeometry(QtCore.QRect(-3, 0, 723, 720))
-        self.graphicsView.setStyleSheet("background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheel rev 3/wheelDashboard/dashBackground.png); background-repeat: no-repeat; background-position: center;")
+        self.graphicsView.setStyleSheet(backgroundLocation)
         self.graphicsView.setObjectName("graphicsView")
         
         self.allWidgets()
