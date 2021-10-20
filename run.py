@@ -5,6 +5,7 @@ from PyQt5.QtCore import QRunnable, Qt, QThreadPool
 # from PyQt5.QtWidgets import (QApplication,QLabel,QMainWindow,QPushButton,QVBoxLayout,QWidget)
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
+from PyQt5 import Qt as qt
 
 
 
@@ -31,8 +32,10 @@ class Runnable(QRunnable):
             if (self.gear == 0):
                 self.gearFinal = "R"
 
+            self.speedFinal = round(self.speed)
+
             window.gearLabel.setText(str(self.gearFinal))
-            # window.speedLabel.setText("hello World")
+            window.speedLabel.setText(str(self.speedFinal))
 
             
     def initialiseUDPCon(self):
@@ -65,24 +68,41 @@ class Window(QMainWindow):
         self.setupUi()
         self.runTasks()
 
-    def setupUi(self):
-        self.setWindowTitle("Wheel Dash")
-        self.setGeometry(0, 0, 720, 720)
-        self.setStyleSheet("background:rgb(51,51,51)")
-        self.centralWidget = QWidget()
-        self.setCentralWidget(self.centralWidget)
-
-        self.gearLabel = QLabel("N")
-        self.gearLabel.setFont(QFont('Comic Sans MS', 200))
+    def fonts(self):
+        self.gearLabel = QLabel("")
+        self.gearLabel.setFont(QFont(self.fontName, 200))
         self.gearLabel.setStyleSheet("color:rgb(255,255,255)")
         self.gearLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        # self.speedLabel = QLabel("N")
-        # self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+        self.speedLabelLabel = QLabel("SPEED")
+        self.speedLabelLabel.setFont(QFont(self.fontName, 75))
+        self.speedLabelLabel.setStyleSheet("color:rgb(255,255,255)")
+        self.speedLabelLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+        self.speedLabel = QLabel("")
+        self.speedLabel.setFont(QFont(self.fontName, 200))
+        self.speedLabel.setStyleSheet("color:rgb(255,255,255)")
+        self.speedLabel.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+
+
+    def setupUi(self):
+        self.fontName = 'Comic Sans MS'
+        self.setWindowTitle("Wheel Dash")
+        self.setGeometry(0, 0, 720, 720)
+        self.setFixedSize(720,720)
+        self.setStyleSheet("background:rgb(200,200,205)")
+        self.centralWidget = QWidget()
+        self.setCentralWidget(self.centralWidget)
+        
+        self.fonts()
         
         layout = QVBoxLayout()
         layout.addWidget(self.gearLabel)
-        # layout.addWidget(self.speedLabel)
+        layout.addWidget(self.speedLabelLabel)
+        layout.addWidget(self.speedLabel)
         self.centralWidget.setLayout(layout)
+
+    
 
     def runTasks(self):
         threadCount = QThreadPool.globalInstance().maxThreadCount()
