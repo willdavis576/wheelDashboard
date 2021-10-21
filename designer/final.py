@@ -29,15 +29,16 @@ class Runnable(QRunnable):
         self.initialiseUDPCon()
         while True:
             self.pktformat='cifff??????fffiiiifffffiffffffffffffffffff'
-            self.messageback, self.ipAddress =self.clientSocket.recvfrom(16384)
+            self.messageback, self.ipAddress =self.clientSocket.recvfrom(328)
             self.backString = unpack(self.pktformat, self.messageback[:152])
 
             self.gear = self.backString[23]
             self.speed = self.backString[3]
             self.engineRPM = round(self.backString[21])
-
+            
             self.engineRPMScaled = round((self.engineRPM) * (595 / 8000))
             ui.revCounter.setFixedWidth(self.engineRPMScaled)
+            # ui.revCounter.setLineWidth(self.engineRPMScaled)
 
             if (self.gear > 1):
                 self.gearFinal = self.gear - 1
