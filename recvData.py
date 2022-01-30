@@ -1,19 +1,21 @@
 from socket import *
 from struct import *
 
-serverName='192.168.0.163'
-serverPort = 9996
-clientSocket = socket(AF_INET,SOCK_DGRAM)
-message=pack('iii',1,1,0)
-
-clientSocket.sendto(message, (serverName, serverPort))
-
-messageback, ipAddress=clientSocket.recvfrom(1024)
-print( 'received')
-pktformat='100s100sii100s100s'
-n = calcsize(pktformat)
-print (n)
-print (unpack(pktformat, messageback))
+for i in range(255):
+	serverName='192.168.0.163'
+	serverPort = 20777
+	print("clientSock")
+	clientSocket = socket(AF_INET,SOCK_DGRAM)
+	message=pack('iii',1,1,0)
+	print("message")
+	clientSocket.sendto(message, (serverName, serverPort))
+	print("recv")
+	messageback, ipAddress=clientSocket.recvfrom(1024)
+	print( 'i')
+	pktformat='100s100sii100s100s'
+	n = calcsize(pktformat)
+	print (n)
+	print (unpack(pktformat, messageback))
 
 backString = unpack(pktformat, messageback)
 
