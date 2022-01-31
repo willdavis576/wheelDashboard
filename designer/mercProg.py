@@ -6,7 +6,6 @@ from PyQt5.QtCore import QRunnable, Qt, QThreadPool
 from PyQt5.QtWidgets import * 
 from PyQt5.QtGui import * 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from asyncio.windows_events import NULL
 from telemetry_f1_2021.listener import TelemetryListener
 
 device = 1
