@@ -39,9 +39,9 @@ class Runnable(QRunnable):
                         self.wheelData["tyre"] = self.carTelem[19]['m_tyres_inner_temperature']
                         # print(self.wheelData)
                 
-                self.engineRPMScaled = round((self.wheelData["rpm"]) * (595 / 11000))
-                ui.revCounter.setFixedWidth(self.engineRPMScaled)
-                ui.revCounter.setLineWidth(self.engineRPMScaled)
+                # self.engineRPMScaled = round((self.wheelData["rpm"]) * (595 / 11000))
+                # ui.revCounter.setFixedWidth(self.engineRPMScaled)
+                # ui.revCounter.setLineWidth(self.engineRPMScaled)
                 try:
                         ui.frontLeftBLabel.setText(str(self.wheelData["brake"][2]))
                         ui.frontRightBLabel.setText(str(self.wheelData["brake"][3]))
