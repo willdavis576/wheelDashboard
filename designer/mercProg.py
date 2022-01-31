@@ -7,11 +7,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import * 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from telemetry_f1_2021.listener import TelemetryListener
-#help git
+
 device = 1
 backgroundLocation = ""
 winBackLoc = "background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheelDashboard/mercDashBare.png); background-repeat: no-repeat; background-position: center;"
-piBackLoc = "background-image: url(/home/pi/wheelDashboard/mercDashBare.png)"
+piBackLoc = "background-image: url(/home/pi/wheelDashboard/mercDashBare.png); background-repeat: no-repeat; background-position: center;"
 
 
 if device == 0:
