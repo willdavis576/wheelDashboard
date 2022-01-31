@@ -6,9 +6,6 @@ listener = TelemetryListener(port=20777, host='')
 
 wheelData = {"speed" : 0, "gear" : 0, "delta" : 0, "lastLapTime" : 0, "tyre" : [], "brake" : [], "rpm" : 0 }
 
-
-
-
 while True:
     packet = listener.get()
     packet = {k: packet.get_value(k) for k, _ in packet._fields_}
@@ -40,5 +37,6 @@ embed()
 
     # data.append(packet)
         
-embed()
+
+
 
