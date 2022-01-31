@@ -37,7 +37,7 @@ class Runnable(QRunnable):
                         self.wheelData["rpm"] = self.carTelem[19]['m_engine_rpm']
                         self.wheelData["brake"] = self.carTelem[19]['m_brakes_temperature']
                         self.wheelData["tyre"] = self.carTelem[19]['m_tyres_inner_temperature']
-                        print(self.wheelData)
+                        # print(self.wheelData)
                 
                 self.engineRPMScaled = round((self.wheelData["rpm"]) * (595 / 11000))
                 ui.revCounter.setFixedWidth(self.engineRPMScaled)
