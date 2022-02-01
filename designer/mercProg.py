@@ -28,19 +28,22 @@ class Runnable(QRunnable):
 
         while True:
                 self.packet = self.listener.get()
-                if self.packet != None:
-                        if 'm_car_telemetry_data' in str(self.packet):
-                                self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
-                                self.carTelem = self.packet.get('m_car_telemetry_data')
-                
-                if self.carTelem != None:
-                        self.wheelData["speed"] = self.carTelem[19]['m_speed']
-                        self.wheelData["gear"] = self.carTelem[19]['m_gear']
-                        self.wheelData["rpm"] = self.carTelem[19]['m_engine_rpm']
-                        self.wheelData["brake"] = self.carTelem[19]['m_brakes_temperature']
-                        self.wheelData["tyre"] = self.carTelem[19]['m_tyres_inner_temperature']
-                        # print(self.wheelData)
-                
+                try:
+                        if self.packet != None:
+                                if 'm_car_telemetry_data' in str(self.packet):
+                                        self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
+                                        self.carTelem = self.packet.get('m_car_telemetry_data')
+                        
+                        if self.carTelem != None:
+                                self.wheelData["speed"] = self.carTelem[19]['m_speed']
+                                self.wheelData["gear"] = self.carTelem[19]['m_gear']
+                                self.wheelData["rpm"] = self.carTelem[19]['m_engine_rpm']
+                                self.wheelData["brake"] = self.carTelem[19]['m_brakes_temperature']
+                                self.wheelData["tyre"] = self.carTelem[19]['m_tyres_inner_temperature']
+                                # print(self.wheelData)
+                except Exception as e:
+                        print(e)
+                        
                 # self.engineRPMScaled = round((self.wheelData["rpm"]) * (595 / 11000))
                 # ui.revCounter.setFixedWidth(self.engineRPMScaled)
                 # ui.revCounter.setLineWidth(self.engineRPMScaled)
