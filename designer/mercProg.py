@@ -29,7 +29,7 @@ class Runnable(QRunnable):
         while True:
                 self.packet = self.listener.get()
                 if self.packet != None:
-                        if 'm_car_telemetry_data' in self.packet:
+                        if 'm_car_telemetry_data' in str(self.packet):
                                 self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
                                 self.carTelem = self.packet.get('m_car_telemetry_data')
                 
