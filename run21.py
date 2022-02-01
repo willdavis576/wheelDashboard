@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from telemetry_f1_2021.listener import TelemetryListener
 from IPython import embed
 import json

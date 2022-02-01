@@ -43,31 +43,38 @@ class Runnable(QRunnable):
                 # ui.revCounter.setFixedWidth(self.engineRPMScaled)
                 # ui.revCounter.setLineWidth(self.engineRPMScaled)
                 try:
-                        ui.frontLeftBLabel.setText(str(self.wheelData["brake"][2]))
-                        ui.frontRightBLabel.setText(str(self.wheelData["brake"][3]))
-                        ui.backLeftBLabel.setText(str(self.wheelData["brake"][0]))
-                        ui.backRightBlabel.setText(str(self.wheelData["brake"][1]))
-                        
-                        ui.frontLeftTLabel.setText(str(self.wheelData["tyre"][2]))
-                        ui.frontRightTLabel.setText(str(self.wheelData["tyre"][3]))
-                        ui.rearLeftTLabel.setText(str(self.wheelData["tyre"][0]))
-                        ui.rearRightTLabel.setText(str(self.wheelData["tyre"][1]))
+                        if self.wheelData["brake"] != self.oldBrake:
+                                ui.frontLeftBLabel.setText(str(self.wheelData["brake"][2]))
+                                ui.frontRightBLabel.setText(str(self.wheelData["brake"][3]))
+                                ui.backLeftBLabel.setText(str(self.wheelData["brake"][0]))
+                                ui.backRightBlabel.setText(str(self.wheelData["brake"][1]))
+                                
+                                ui.frontLeftTLabel.setText(str(self.wheelData["tyre"][2]))
+                                ui.frontRightTLabel.setText(str(self.wheelData["tyre"][3]))
+                                ui.rearLeftTLabel.setText(str(self.wheelData["tyre"][0]))
+                                ui.rearRightTLabel.setText(str(self.wheelData["tyre"][1]))
+                                self.oldBrake = self.wheelData["brake"]
                 except:
                         pass
 
-                if (self.wheelData["gear"] > 0):
-                        self.gearFinal = self.wheelData["gear"]
+                if self.wheelData["gear"] != self.oldGear:
+                        if (self.wheelData["gear"] > 0):
+                                self.gearFinal = self.wheelData["gear"]
 
-                if (self.wheelData["gear"] == 0):
-                        self.gearFinal = "N"
+                        if (self.wheelData["gear"] == 0):
+                                self.gearFinal = "N"
 
-                if (self.wheelData["gear"] == -1):
-                        self.gearFinal = "R"
+                        if (self.wheelData["gear"] == -1):
+                                self.gearFinal = "R"
+                                
+                        ui.gearLabel.setText(str(self.gearFinal))
+                        self.oldGear = self.wheelData["gear"]
 
-                self.speedFinal = self.wheelData["speed"]
-
-                ui.gearLabel.setText(str(self.gearFinal))
-                ui.speed.setText(str(self.speedFinal))
+                if self.wheelData["speed"] != self.oldSpeed:
+                        self.speedFinal = self.wheelData["speed"]
+                        ui.speed.setText(str(self.speedFinal))
+                
+                
 
                 
                 
@@ -80,6 +87,11 @@ class Runnable(QRunnable):
         self.speedfinal = ""
         self.engineRPMScaled = ""
         self.constant = ""
+        
+        self.oldGear = ""
+        self.oldSpeed = ""
+        self.oldTyre = ""
+        self.oldBrake = ""
 
 
 class Ui_MainWindow(object):

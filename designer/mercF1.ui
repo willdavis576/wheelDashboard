@@ -246,7 +246,7 @@
      <set>Qt::AlignCenter</set>
     </property>
    </widget>
-   <widget class="QLabel" name="backLeftBlabel">
+   <widget class="QLabel" name="backRightBlabel">
     <property name="geometry">
      <rect>
       <x>140</x>
