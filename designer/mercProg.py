@@ -29,8 +29,9 @@ class Runnable(QRunnable):
         while True:
                 self.packet = self.listener.get()
                 if self.packet != None:
-                        self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
-                        self.carTelem = self.packet.get('m_car_telemetry_data')
+                        if 'm_car_telemetry_data' in self.packet:
+                                self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
+                                self.carTelem = self.packet.get('m_car_telemetry_data')
                 
                 if self.carTelem != None:
                         self.wheelData["speed"] = self.carTelem[19]['m_speed']
