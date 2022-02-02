@@ -8,6 +8,8 @@ from PyQt5.QtGui import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from telemetry_f1_2021.listener import TelemetryListener
 
+# from IPython import embed
+
 device = 1
 backgroundLocation = ""
 winBackLoc = "background-image: url(C:/Users/Will/OneDrive - Middlesex University/Inventions/fanatec wheel/wheelDashboard/mercDashBare.png); background-repeat: no-repeat; background-position: center;"
@@ -28,21 +30,31 @@ class Runnable(QRunnable):
 
         while True:
                 self.packet = self.listener.get()
-                try:
-                        if self.packet != None:
-                                if 'm_car_telemetry_data' in str(self.packet):
-                                        self.packet = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
-                                        self.carTelem = self.packet.get('m_car_telemetry_data')
+                
+                if self.packet != None:
+                        if 'm_car_telemetry_data' in str(self.packet):
+                                try:
+                                        self.carTelem = str(self.packet)[14200:15010]
+                                        self.end = self.carTelem.index('"m_tyres_surface_temperature"')
+                                        self.start =  self.carTelem.index("{")
+                                        self.carTelem = self.carTelem.replace('"m_tyres_surface_temperature"', "}")
+                                        self.carTelem = self.carTelem[self.start:self.end+1]
+                                        self.carTelem = eval(self.carTelem)
+                                except:
+                                        pass
+                                        # self.packet2 = {k: self.packet.get_value(k) for k, _ in self.packet._fields_}
+                                        # embed()
+                                        # self.carTelem = self.packet.get('m_car_telemetry_data')
                         
-                        if self.carTelem != None:
-                                self.wheelData["speed"] = self.carTelem[19]['m_speed']
-                                self.wheelData["gear"] = self.carTelem[19]['m_gear']
-                                self.wheelData["rpm"] = self.carTelem[19]['m_engine_rpm']
-                                self.wheelData["brake"] = self.carTelem[19]['m_brakes_temperature']
-                                self.wheelData["tyre"] = self.carTelem[19]['m_tyres_inner_temperature']
+                                if self.carTelem != None and self.carTelem != "":
+                                        self.wheelData["speed"] = int(self.carTelem['m_speed'])
+                                        self.wheelData["gear"] = int(self.carTelem["m_gear"])
+                                        self.wheelData["rpm"] = int(self.carTelem['m_engine_rpm'])
+                                        self.wheelData["brake"] = self.carTelem['m_brakes_temperature']
+                                        self.wheelData["tyre"] = self.carTelem['m_tyres_inner_temperature']
                                 # print(self.wheelData)
-                except Exception as e:
-                        print(e)
+                # except Exception as e:
+                #         print(e)
                         
                 # self.engineRPMScaled = round((self.wheelData["rpm"]) * (595 / 11000))
                 # ui.revCounter.setFixedWidth(self.engineRPMScaled)
@@ -97,6 +109,10 @@ class Runnable(QRunnable):
         self.oldSpeed = ""
         self.oldTyre = ""
         self.oldBrake = ""
+        
+        self.start = ""
+        self.end = ""
+        
 
 
 class Ui_MainWindow(object):
